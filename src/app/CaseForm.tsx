@@ -71,6 +71,12 @@ type PartialSymptom = Partial<AddCaseData["symptoms"][0]> & {
   symptomId: string;
 };
 
+const SuccessPage = () => <div className="w-full text-center max-w-xl">
+  <h2 className="text-3xl font-extrabold text-stone-600 pt-4">Thank you for sharing your experience!</h2>
+  <p className="text-stone-500">Your submission has been added to our database. Check back to see if we get enough data to do anything interesting with it.</p>
+</div>
+
+
 const CaseDatesForm = ({
   handleChange,
   next,
@@ -105,14 +111,21 @@ const CaseDatesForm = ({
   </>
 );
 
+
+
 function CaseForm({
   allSymptoms,
 }: {
   allSymptoms: { id: string; symptom: string }[];
 }) {
-  const addCase = api.addCase.useMutation();
+  const addCase = api.addCase.useMutation({
+    onSuccess: () => {
+      setShowSuccess(true);
+    },
+  });
 
   const [showSymptom, setShowSymptom] = React.useState(false);
+  const [showSuccess, setShowSuccess] = React.useState(false);
   const [symptoms, setSymptoms] = React.useState<Map<string, PartialSymptom>>(
     new Map(),
   );
@@ -178,6 +191,10 @@ function CaseForm({
 
     addCase.mutate(payload);
   };
+
+  if (showSuccess) {
+    return <SuccessPage />;
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex w-[600px] flex-col pb-60">
