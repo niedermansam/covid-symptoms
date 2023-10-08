@@ -34,7 +34,7 @@ function PopulationSelect({value}: {
         (selectedOption) => {
 
             if(!selectedOption) return;
-            router.push(`/long-covid/server/${currentGroup as string}/${selectedOption.value}/${params.experience as string}`)
+            router.push(`/long-covid/${currentGroup as string}/${selectedOption.value}/${params.experience as string}`)
         }
 
 

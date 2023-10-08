@@ -68,7 +68,7 @@ async function Page() {
       }));
       
 
-  console.log([...SymptomMap]);
+  // console.log([...SymptomMap]);
   /*
     const casesWithSymptoms = await db
     .select({

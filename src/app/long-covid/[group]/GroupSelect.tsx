@@ -22,7 +22,7 @@ function GroupSelect({
   const router = useRouter();
 
   const onChange = (value: { value: string; label: string }) => {
-    router.push(`/long-covid/server/${value.value}`);
+    router.push(`/long-covid/${value.value}`);
   };
 
   return <ReactSelect onChange={(e) => onChange(e as {

@@ -204,10 +204,10 @@ export async function getData({
     handleDataUpdate(row);
   });
 
-  console.log(DataMap);
+  // console.log(DataMap);
 
   const newData = Array.from(DataMap.values());
 
-  console.log(newData);
+ //  console.log(newData);
   return newData;
 }

@@ -38,7 +38,7 @@ function ExperienceSelect({value}: {
         (selectedOption) => {
 
             if(!selectedOption) return;
-            router.push(`/long-covid/server/${currentGroup as string}/${currentPopulation as string}/${selectedOption.value }`)
+            router.push(`/long-covid/${currentGroup as string}/${currentPopulation as string}/${selectedOption.value }`)
         }
 
 

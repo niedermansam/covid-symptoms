@@ -37,7 +37,7 @@ async function Page({
     (decodeURI(params.experience) as (typeof EXPERIENCES)[number]) ||
     "long COVID";
 
-  console.log(currentPopulation);
+  // console.log(currentPopulation);
 
   const currentFilter = //:IndicatorFilter
     {

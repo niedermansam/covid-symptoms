@@ -41,7 +41,7 @@ export async function GET() {
     groupObject[key] = [...value];
   }
 
-  console.log(groupObject)
+  // console.log(groupObject)
 
   const response = JSON.stringify([...IndicatorSet]);
 

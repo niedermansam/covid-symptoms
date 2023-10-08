@@ -1,9 +1,7 @@
 import React from "react";
 import { MyResponsiveBar } from "../NivoBar";
-import { GROUPS, type LongCovidDataGroup } from "../../api/long-covid/types";
+import { type GROUPS, type LongCovidDataGroup } from "../../api/long-covid/types";
 import { type IndicatorFilter, getData } from "../getData";
-import Link from "next/link";
-import Group from "react-select/dist/declarations/src/components/Group";
 import GroupSelect from "./GroupSelect";
 import PopulationSelect from "./[population]/PopulationSelect";
 import ExperienceSelect from "./[population]/[experience]/ExperienceSelect";

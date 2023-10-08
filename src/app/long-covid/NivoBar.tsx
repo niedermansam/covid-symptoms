@@ -121,7 +121,7 @@ DataType }) => {
   if(!data?.[0] ) return null;
 
 
-  console.log(data)
+  // console.log(data)
   const keys =  Object.keys(data[0]).filter((key) => key !== 'group')
 
   return (
