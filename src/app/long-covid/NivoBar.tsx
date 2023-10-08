@@ -1,6 +1,7 @@
 'use client'
 import { ResponsiveBar } from "@nivo/bar";
 import { INDICATORS } from "../api/long-covid/types";
+import { useMediaQuery } from "./useMediaQuery";
 
 const defaultData = [
   {
@@ -116,8 +117,10 @@ const defaultData = [
 // you'll often use just a few of them.
 type DataType = Record<string, string | number>[];
 
+
 export const MyResponsiveBar = ({ data, label /* see data tab */ }: {data: 
 DataType, label: string }) => {
+  const mobile = useMediaQuery('(max-width: 640px)')
   if(!data?.[0] ) return null;
 
 
@@ -126,21 +129,19 @@ DataType, label: string }) => {
 
   return (
     <>
-      <p className="md:-mb-8  md:mt-12 text-lg font-bold text-stone-500 sm:pl-12">
+      <p className="text-lg  font-bold text-stone-500 sm:pl-12 md:-mb-8 md:mt-12">
         {label}
       </p>
       <ResponsiveBar
-        data={data.map(x => {
-          console.log(data.length)
+        data={data.map((x) => {
           return {
             ...x,
-            
-          }
+          };
         })}
         keys={keys}
         indexBy="group"
         groupMode="grouped"
-        margin={{ top: 60, right: 60, bottom: 100, left: 70 }}
+        margin={{ top: 60, right: 60, bottom: data.length > 5 || data.length > 2 && mobile  ? 150 : 60, left: 70 }}
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
@@ -154,7 +155,8 @@ DataType, label: string }) => {
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: data.length > 5 ? -45 : 0,
+          tickRotation:
+            data.length > 5 ? -45 : data.length > 2 && mobile ? -45 : 0,
         }}
         axisLeft={{
           tickSize: 5,

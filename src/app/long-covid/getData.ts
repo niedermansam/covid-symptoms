@@ -133,7 +133,7 @@ export async function getData({
   const DataMap = new Map<string, DataRecord>();
 
   const handleDataUpdate = (row: (typeof safeData)[0]) => {
-    const group = row.subgroup.replace(/Non-Hispanic(,)?/, '').replace(', single race','').replace('other', 'Other');
+    const group = row.subgroup.replace(/Non-Hispanic(,)?/, '').replace("races and", "&").replace(', single race','').replace('other', 'Other');
     const indicator = row.indicator.replace(
       "as a percentage",
       "%",
