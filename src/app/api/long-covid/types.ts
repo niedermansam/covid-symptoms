@@ -1,8 +1,8 @@
 export const INDICATORS = [
-  "Ever experienced long COVID, as a percentage of all adults",
-  "Ever experienced long COVID, as a percentage of adults who ever had COVID",
-  "Currently experiencing long COVID, as a percentage of all adults",
-  "Currently experiencing long COVID, as a percentage of adults who ever had COVID",
+  "Ever experienced long COVID, % of all adults",
+  "Ever experienced long COVID, % of adults who ever had COVID",
+  "Currently experiencing long COVID, % of all adults",
+  "Currently experiencing long COVID, % of adults who ever had COVID",
   "Ever had COVID",
 ] as const;
 

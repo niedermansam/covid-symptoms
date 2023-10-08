@@ -130,11 +130,17 @@ DataType, label: string }) => {
         {label}
       </p>
       <ResponsiveBar
-        data={data}
+        data={data.map(x => {
+          console.log(data.length)
+          return {
+            ...x,
+            
+          }
+        })}
         keys={keys}
         indexBy="group"
         groupMode="grouped"
-        margin={{ top: 60, right: 60, bottom: 50, left: 70 }}
+        margin={{ top: 60, right: 60, bottom: 100, left: 70 }}
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
@@ -148,7 +154,7 @@ DataType, label: string }) => {
         axisBottom={{
           tickSize: 5,
           tickPadding: 5,
-          tickRotation: 0,
+          tickRotation: data.length > 5 ? -45 : 0,
         }}
         axisLeft={{
           tickSize: 5,
@@ -171,6 +177,7 @@ DataType, label: string }) => {
             direction: "column",
             justify: false,
             translateY: -60,
+            translateX: 0,
             itemsSpacing: 10,
             itemWidth: 300,
             itemHeight: 20,
