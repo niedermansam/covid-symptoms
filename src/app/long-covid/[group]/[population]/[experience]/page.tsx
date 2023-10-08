@@ -13,6 +13,7 @@ import {
 import GroupSelect from "../../GroupSelect";
 import PopulationSelect from "../PopulationSelect";
 import ExperienceSelect from "./ExperienceSelect";
+import DataSelect from "@/app/long-covid/DataSelect";
 
 const FIRST_DATE = "Jul 26 - Aug 7, 2023";
 const SECOND_DATE = "Dec 9 - Dec 19, 2022";
@@ -80,9 +81,7 @@ async function Page({
 
   return (
     <>
-      <GroupSelect value={groupValue} />
-      <PopulationSelect value={populationValue} />
-      <ExperienceSelect value={experienceValue} />
+    <DataSelect group={groupValue} population={populationValue} experience={experienceValue} />
 
       <div style={{ height: 400 }}>
         <MyResponsiveBar

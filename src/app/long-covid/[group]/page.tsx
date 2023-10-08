@@ -5,6 +5,7 @@ import { type IndicatorFilter, getData } from "../getData";
 import GroupSelect from "./GroupSelect";
 import PopulationSelect from "./[population]/PopulationSelect";
 import ExperienceSelect from "./[population]/[experience]/ExperienceSelect";
+import DataSelect from "../DataSelect";
 
 const FIRST_DATE = "Jul 26 - Aug 7, 2023";
 const SECOND_DATE = "Dec 9 - Dec 19, 2022";
@@ -59,9 +60,11 @@ async function Page({
 
   return (
     <>
-      <GroupSelect value={groupValue} />
-      <PopulationSelect value={populationValue} />
-      <ExperienceSelect value={experienceValue} />
+      <DataSelect
+        group={groupValue}
+        population={populationValue}
+        experience={experienceValue}
+      />
 
       <div style={{ height: 400 }}>
         <MyResponsiveBar data={newData} 

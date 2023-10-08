@@ -25,11 +25,13 @@ function GroupSelect({
     router.push(`/long-covid/${value.value}`);
   };
 
-  return <ReactSelect onChange={(e) => onChange(e as {
+  return <div className="w-full"> 
+  <p className="text-sm font-bold">Grouping Variable</p>
+  <ReactSelect onChange={(e) => onChange(e as {
     value: string;
     label: string;
   })}
-  value={value} options={options} />;
+  value={value} options={options} /></div>;
 }
 
 export default GroupSelect;
