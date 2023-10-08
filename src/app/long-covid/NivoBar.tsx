@@ -126,7 +126,9 @@ DataType, label: string }) => {
 
   return (
     <>
-      <p className="sm:pl-12 -mb-8 mt-12 font-bold text-lg text-stone-500">{label}</p>
+      <p className="md:-mb-8  md:mt-12 text-lg font-bold text-stone-500 sm:pl-12">
+        {label}
+      </p>
       <ResponsiveBar
         data={data}
         keys={keys}
