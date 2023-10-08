@@ -93,10 +93,10 @@ function Page() {
         <div>
         </div>
         <div style={{ height: 400 }}>
-          <MyResponsiveBar data={newResult.data} />
+          <MyResponsiveBar data={newResult.data} label="" />
         </div>
         <div style={{ height: 400 }}>
-          <MyResponsiveBar data={oldResult.data} />
+          <MyResponsiveBar data={oldResult.data} label=""/>
         </div>
       </>
     </div>

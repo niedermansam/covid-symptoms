@@ -116,8 +116,8 @@ const defaultData = [
 // you'll often use just a few of them.
 type DataType = Record<string, string | number>[];
 
-export const MyResponsiveBar = ({ data /* see data tab */ }: {data: 
-DataType }) => {
+export const MyResponsiveBar = ({ data, label /* see data tab */ }: {data: 
+DataType, label: string }) => {
   if(!data?.[0] ) return null;
 
 
@@ -125,76 +125,75 @@ DataType }) => {
   const keys =  Object.keys(data[0]).filter((key) => key !== 'group')
 
   return (
-  <ResponsiveBar
-    data={data}
-    keys={
-      keys
-    }
-    indexBy="group"
-    groupMode="grouped"
-    margin={{ top: 50, right: 60, bottom: 50, left: 70 }}
-    padding={0.3}
-    valueScale={{ type: "linear" }}
-    indexScale={{ type: "band", round: true }}
-    colors={{ scheme: "nivo" }}
-    borderColor={{
-      from: "color",
-      modifiers: [["darker", 1.6]],
-    }}
-    axisTop={null}
-    axisRight={null}
-    axisBottom={{
-      tickSize: 5,
-      tickPadding: 5,
-      tickRotation: 0,
-      
-    }}
-    axisLeft={{
-      tickSize: 5,
-      tickPadding: 5,
-      tickRotation: 0,
-      legend: "Percent",
-      legendPosition: "middle",
-      legendOffset: -40,
-    }}
-    labelSkipWidth={12}
-    labelSkipHeight={12}
-    labelTextColor={{
-      from: "color",
-      modifiers: [["darker", 1.6]],
-    }}
-    legends={[
-      {
-        dataFrom: "keys",
-        anchor: "top",
-        direction: "column",
-        justify: false,
-        translateX: 120,
-        translateY: -50,
-        itemsSpacing: 10,
-        itemWidth: 300,
-        itemHeight: 20,
-        itemDirection: "left-to-right",
-        itemOpacity: 0.85,
-        symbolSize: 20,
-        effects: [
+    <>
+      <p className="sm:pl-12 -mb-8 mt-12 font-bold text-lg text-stone-500">{label}</p>
+      <ResponsiveBar
+        data={data}
+        keys={keys}
+        indexBy="group"
+        groupMode="grouped"
+        margin={{ top: 60, right: 60, bottom: 50, left: 70 }}
+        padding={0.3}
+        valueScale={{ type: "linear" }}
+        indexScale={{ type: "band", round: true }}
+        colors={{ scheme: "nivo" }}
+        borderColor={{
+          from: "color",
+          modifiers: [["darker", 1.6]],
+        }}
+        axisTop={null}
+        axisRight={null}
+        axisBottom={{
+          tickSize: 5,
+          tickPadding: 5,
+          tickRotation: 0,
+        }}
+        axisLeft={{
+          tickSize: 5,
+          tickPadding: 5,
+          tickRotation: 0,
+          legend: "Percent",
+          legendPosition: "middle",
+          legendOffset: -40,
+        }}
+        labelSkipWidth={12}
+        labelSkipHeight={12}
+        labelTextColor={{
+          from: "color",
+          modifiers: [["darker", 1.6]],
+        }}
+        legends={[
           {
-            on: "hover",
-            style: {
-              itemOpacity: 1,
-            },
+            dataFrom: "keys",
+            anchor: "top-right",
+            direction: "column",
+            justify: false,
+            translateY: -60,
+            itemsSpacing: 10,
+            itemWidth: 300,
+            itemHeight: 20,
+            itemDirection: "left-to-right",
+            itemOpacity: 0.85,
+            symbolSize: 20,
+            effects: [
+              {
+                on: "hover",
+                style: {
+                  itemOpacity: 1,
+                },
+              },
+            ],
           },
-        ],
-      },
-    ]}
-    role="application"
-  />
-)};
+        ]}
+        role="application"
+      />
+    </>
+  );};
 
-export default function NivoBar() {
+export default function NivoBar({ label }: { label: string  }) {
   return (
     <div style={{ height: 400 }}>
-      <MyResponsiveBar data={defaultData} />
+      <MyResponsiveBar data={defaultData} label={label} />
     </div>
   );
 }

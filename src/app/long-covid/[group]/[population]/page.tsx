@@ -82,12 +82,13 @@ async function Page({
       <PopulationSelect value={populationValue} />
       <ExperienceSelect value={experienceValue} />
       <div style={{ height: 400 }}>
-        {FIRST_DATE.split(" - ")[1]}
-        <MyResponsiveBar data={newData} />
+        <MyResponsiveBar data={newData} label={FIRST_DATE.split(" - ")[1] ?? ''} />
       </div>
       <div style={{ height: 400 }}>
-        {SECOND_DATE.split(" - ")[1]}
-        <MyResponsiveBar data={oldData} />
+        <MyResponsiveBar
+          data={oldData}
+          label={SECOND_DATE.split(" - ")[1] ?? ""}
+        />
       </div>
     </>
   );
