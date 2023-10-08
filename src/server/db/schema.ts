@@ -1,15 +1,14 @@
-import { createId } from "@paralleldrive/cuid2";
 import { relations, sql } from "drizzle-orm";
 import {
-  bigint,
   index,
   int,
   mysqlTableCreator,
   primaryKey,
   text,
   timestamp,
-  uniqueIndex,
   varchar,
+  boolean,
+  float,
 } from "drizzle-orm/mysql-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
@@ -20,7 +19,6 @@ import { type AdapterAccount } from "next-auth/adapters";
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
 export const mysqlTable = mysqlTableCreator((name) => `covid-symptoms_${name}`);
-
 
 export const users = mysqlTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
@@ -57,7 +55,7 @@ export const accounts = mysqlTable(
   (account) => ({
     compoundKey: primaryKey(account.provider, account.providerAccountId),
     userIdIdx: index("userId_idx").on(account.userId),
-  })
+  }),
 );
 
 export const accountsRelations = relations(accounts, ({ one }) => ({
@@ -75,7 +73,7 @@ export const sessions = mysqlTable(
   },
   (session) => ({
     userIdIdx: index("userId_idx").on(session.userId),
-  })
+  }),
 );
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({
@@ -91,7 +89,7 @@ export const verificationTokens = mysqlTable(
   },
   (vt) => ({
     compoundKey: primaryKey(vt.identifier, vt.token),
-  })
+  }),
 );
 
 export const cases = mysqlTable("cases", {
@@ -102,15 +100,21 @@ export const cases = mysqlTable("cases", {
   start: timestamp("start", { mode: "date" }).notNull(),
   peaked: timestamp("peaked", { mode: "date" }),
   end: timestamp("end", { mode: "date" }),
-  recorded: timestamp("recorded", { mode: "date" }).notNull().default(sql`CURRENT_TIMESTAMP()`),
+  recorded: timestamp("recorded", { mode: "date" })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP()`),
+  fake: boolean("fake").default(false),
 });
 
 export const casesRelations = relations(cases, ({ many }) => ({
   casesToSymptoms: many(casesSymptoms),
 }));
 
-export const symptoms = mysqlTable( "symptoms", {
-  id: varchar("id", { length: 255 }).notNull().primaryKey().$default(() => sql`UUID()`),
+export const symptoms = mysqlTable("symptoms", {
+  id: varchar("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$default(() => sql`UUID()`),
   symptom: varchar("symptom", { length: 255 }).notNull(),
 });
 
@@ -118,23 +122,50 @@ export const symptomsRelations = relations(symptoms, ({ many }) => ({
   symptomsToCases: many(casesSymptoms),
 }));
 
-export const casesSymptoms = mysqlTable("casesSymptoms", {
-  caseId: varchar("caseId", { length: 255 }).notNull(),
-  symptomId: varchar("symptomId", { length: 255 }).notNull(),
-  severity: int("severity"),
-  start: timestamp("start", { mode: "date" }).notNull(),
-  end: timestamp("end", { mode: "date" }),
-  peaked: timestamp("peaked", { mode: "date" }),
-  notes: text("notes"),
-}, (t) => ({
-  pk: primaryKey(t.caseId, t.symptomId),
+export const casesSymptoms = mysqlTable(
+  "casesSymptoms",
+  {
+    caseId: varchar("caseId", { length: 255 }).notNull(),
+    symptomId: varchar("symptomId", { length: 255 }).notNull(),
+    severity: int("severity"),
+    start: timestamp("start", { mode: "date" }).notNull(),
+    end: timestamp("end", { mode: "date" }),
+    peaked: timestamp("peaked", { mode: "date" }),
+    notes: text("notes"),
+
+    fake: boolean("fake").default(false),
+  },
+  (t) => ({
+    pk: primaryKey(t.caseId, t.symptomId),
+  }),
+);
+
+export const casesSymptomsRelations = relations(casesSymptoms, ({ one }) => ({
+  case: one(cases, { fields: [casesSymptoms.caseId], references: [cases.id] }),
+  symptom: one(symptoms, {
+    fields: [casesSymptoms.symptomId],
+    references: [symptoms.id],
+  }),
 }));
 
-export const casesSymptomsRelations = relations(casesSymptoms, ({one}) => ({
-  case: one(cases, {fields: [casesSymptoms.caseId], references: [cases.id]}),
-  symptom: one(symptoms, {fields: [casesSymptoms.symptomId], references: [symptoms.id]}),
-}))
-
+export const longCovidData = mysqlTable("longCovidData", {
+  id: varchar("id", { length: 255 })
+    .notNull()
+    .primaryKey()
+    .$default(() => sql`UUID()`),
+  Indicator: varchar("Indicator", { length: 255 }).notNull(),
+  Value: float("Value").notNull(),
+  Group: varchar("Group", { length: 255 }).notNull(),
+  Subgroup: varchar("Subgroup", { length: 255 }).notNull(),
+  TimePeriodStartDate: timestamp("TimePeriodStartDate", {
+    mode: "date",
+  }).notNull(),
+  TimePeriodEndDate: timestamp("TimePeriodEndDate", { mode: "date" }).notNull(),
+  TimePeriodLabel: varchar("TimePeriodLabel", { length: 255 }).notNull(),
+  Lowci:  float("Lowci").notNull(),
+  Highci: float("Highci").notNull(),
+  State: varchar("State", { length: 255 }).notNull(),
+});
 /*
 export const casesRelations = relations(cases, ({ many }) => ({
   casesToSymptoms: many(symptoms),

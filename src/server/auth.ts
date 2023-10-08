@@ -6,7 +6,7 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 
-import { env } from "@/env.mjs";
+// import { env } from "@/env.mjs";
 import { db } from "@/server/db";
 import { mysqlTable } from "@/server/db/schema";
 

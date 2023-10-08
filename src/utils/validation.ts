@@ -13,6 +13,7 @@ export const TimeValidator = z.object({
   start: z.string().transform(getNoonDate),
   peaked: z.string().transform(dateTransform),
   end: z.string().transform(dateTransform),
+  fake: z.boolean().optional(),
 });
 
 export const symptomValidatorBackend = z.object({
@@ -22,6 +23,7 @@ export const symptomValidatorBackend = z.object({
   peaked: z.string().optional().transform(dateTransform),
   end: z.string().optional().transform(dateTransform),
   notes: z.string().optional(),
+  fake: z.boolean().optional(),
 });
 export const symptomArrayValidatorBackend = z.array(
   symptomValidatorBackend

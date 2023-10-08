@@ -1,11 +1,9 @@
 "use client";
 import { api } from "@/utils/api";
+import type{  PartialExcept, UnwrapTRPCMutation } from "@/utils/types";
 import {
-  TimeValidator,
-  caseValidator,
   checkDateLogic,
   checkDatesAreValid,
-  symptomArrayValidatorBackend,
   symptomValidatorBackend,
   symptomValidatorFrontend,
 } from "@/utils/validation";
@@ -59,17 +57,12 @@ const StartPeakEnd = ({
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type UnwrapTRPCMutation<T> = T extends () => Record<"mutate", any>
-  ? Parameters<ReturnType<T>["mutate"]>[0]
-  : never;
+
 
 type AddCaseData = UnwrapTRPCMutation<typeof api.addCase.useMutation>;
 
 // create a type for the symptom object with everything optional but the symptomId
-type PartialSymptom = Partial<AddCaseData["symptoms"][0]> & {
-  symptomId: string;
-};
+type PartialSymptom = PartialExcept<AddCaseData['symptoms'][number], 'symptomId'>;
 
 const SuccessPage = () => <div className="w-full text-center max-w-xl">
   <h2 className="text-3xl font-extrabold text-stone-600 pt-4">Thank you for sharing your experience!</h2>
