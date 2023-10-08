@@ -132,7 +132,7 @@ DataType }) => {
     }
     indexBy="group"
     groupMode="grouped"
-    margin={{ top: 10, right: 600, bottom: 50, left: 60 }}
+    margin={{ top: 50, right: 60, bottom: 50, left: 70 }}
     padding={0.3}
     valueScale={{ type: "linear" }}
     indexScale={{ type: "band", round: true }}
@@ -166,13 +166,13 @@ DataType }) => {
     legends={[
       {
         dataFrom: "keys",
-        anchor: "bottom-right",
+        anchor: "top",
         direction: "column",
         justify: false,
         translateX: 120,
-        translateY: 0,
-        itemsSpacing: 2,
-        itemWidth: 100,
+        translateY: -50,
+        itemsSpacing: 10,
+        itemWidth: 300,
         itemHeight: 20,
         itemDirection: "left-to-right",
         itemOpacity: 0.85,
